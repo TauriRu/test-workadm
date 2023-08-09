@@ -1,6 +1,11 @@
 .header {
   margin-bottom: 32px;
 }
+.navigation{
+    display: flex;
+    align-items: center;
+    margin-bottom: 32px;
+}
 .searchContainer {
   position: relative;
   display: flex;
@@ -26,4 +31,16 @@
   top: 50%;
   left: 16px;
   transform: translateY(-50%);
+}
+.searchResultLink{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #fff;
+    text-decoration: none;
+    color: #000;
+    transition: all 0.3s ease;
+}
+.searchResultLink:hover{
+    background: #f5f5f5;
 }

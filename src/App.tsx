@@ -2,11 +2,11 @@ import './App.css';
 import Header from './components/header/header';
 import { useState, useEffect } from 'react';
 
-interface Shipment {
+export interface Shipment {
   id: string;
   name: string;
   email: string;
-  boxes: number;
+  boxes: string;
 }
 
 function App() {
@@ -22,12 +22,24 @@ function App() {
   const handleShipmentClick = (event: React.MouseEvent<HTMLAnchorElement>, shipmentId: string) => {
     event.preventDefault();
     const selected = shipments.find(shipment => shipment.id === shipmentId);
-    setSelectedShipment(selected || null);
+    setSelectedShipment(selected || { id: '', name: '', email: '', boxes: '' });
   };
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (selectedShipment) {
+      const newSelectedShipment = { ...selectedShipment, boxes: event.target.value };
+      setSelectedShipment(newSelectedShipment);
+    }
+  };
+
+  const totalBays = selectedShipment && selectedShipment.boxes
+    ? Math.ceil(selectedShipment.boxes.split(',').map(box => parseFloat(box.trim())).reduce((total, boxQty) => total + boxQty, 0) / 10)
+    : 0;
+
 
   return (
     <div className="App">
-      <Header />
+      <Header shipments={shipments} onShipmentClick={handleShipmentClick} />
       <div className="container">
         <div className="row">
           <div className="col-3">
@@ -48,7 +60,15 @@ function App() {
                 <h1 className="shipment-name">{selectedShipment.name}</h1>
                 <p className="shipment-email selected">Email: {selectedShipment.email}</p>
                 <p className='selected'>CARGO BOXES</p>
-                <p className="shipment-boxes">Boxes: <input type='text' defaultValue={selectedShipment.boxes} /></p>
+                <p className="shipment-boxes">Boxes: <input
+                  type='text'
+                  value={selectedShipment.boxes || ''}
+                  onChange={handleInputChange}
+                /></p>
+                <p className='selected'>Number of Cargo Bays:
+                
+                </p>
+                <h3>{totalBays}</h3>
               </div>
             ) : (
               <h1>No shipment selected</h1>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './header.css';
 import HeaderLogo from '../../images/logo.svg';
 import Search from '../../images/search.svg';
@@ -12,6 +12,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ shipments, onShipmentClick }) => {
     const [searchInput, setSearchInput] = useState('');
     const [filteredShippingNames, setFilteredShippingNames] = useState<string[]>([]);
+    const searchContainerRef = useRef<HTMLDivElement>(null);
 
     const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = event.target.value;
@@ -29,6 +30,21 @@ const Header: React.FC<HeaderProps> = ({ shipments, onShipmentClick }) => {
         setFilteredShippingNames(filteredNames);
     };
 
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
+                setFilteredShippingNames([]); // Close the search results
+            }
+        };
+      
+        document.addEventListener('click', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
+
     return (
         <header className='header'>
             <div className="container">
@@ -36,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({ shipments, onShipmentClick }) => {
                     <div className='col-3'>
                         <img className='headerLogo' src={HeaderLogo} alt="headerLogo" />
                     </div>
-                    <div className="col-6">
+                    <div className="col-6" ref={searchContainerRef}>
 
                         <div className='searchContainer'>
                             <input

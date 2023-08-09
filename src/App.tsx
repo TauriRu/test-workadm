@@ -1,5 +1,5 @@
 import './App.css';
-import Header from './components/header';
+import Header from './components/header/header';
 import { useState, useEffect } from 'react';
 
 interface Shipment {
@@ -20,9 +20,9 @@ function App() {
   }, []);
 
   const handleShipmentClick = (event: React.MouseEvent<HTMLAnchorElement>, shipmentId: string) => {
-    event.preventDefault(); 
+    event.preventDefault();
     const selected = shipments.find(shipment => shipment.id === shipmentId);
-    setSelectedShipment(selected || null); 
+    setSelectedShipment(selected || null);
   };
 
   return (
@@ -30,12 +30,12 @@ function App() {
       <Header />
       <div className="container">
         <div className="row">
-          <div className="col-6">
-            <h1>Shipments list</h1>
+          <div className="col-3">
+            <h1 className='selectingShippingTitle'>Shipments list</h1>
             <ul>
               {shipments.map((shipment) => (
-                <li key={shipment.id}>
-                  <a href="#" onClick={(event) => handleShipmentClick(event, shipment.id)}>
+                <li className='shippmentList' key={shipment.id}>
+                  <a className='shippmentLink' role="button" onClick={(event) => handleShipmentClick(event, shipment.id)} >
                     {shipment.name}
                   </a>
                 </li>
@@ -45,11 +45,10 @@ function App() {
           <div className="col-6">
             {selectedShipment ? (
               <div className="shipment-card">
-                <h1>Selected Shipment</h1>
-                <p className="shipment-id">ID: {selectedShipment.id}</p>
-                <p className="shipment-name">Name: {selectedShipment.name}</p>
-                <p className="shipment-email">Email: {selectedShipment.email}</p>
-                <p className="shipment-boxes">Boxes: {selectedShipment.boxes}</p>
+                <h1 className="shipment-name">{selectedShipment.name}</h1>
+                <p className="shipment-email selected">Email: {selectedShipment.email}</p>
+                <p className='selected'>CARGO BOXES</p>
+                <p className="shipment-boxes">Boxes: <input type='text' defaultValue={selectedShipment.boxes} /></p>
               </div>
             ) : (
               <h1>No shipment selected</h1>

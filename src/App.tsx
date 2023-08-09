@@ -28,7 +28,7 @@ function App() {
     };
 
     window.addEventListener('popstate', handleUrlChange);
-    handleUrlChange(); 
+    handleUrlChange();
     return () => {
       window.removeEventListener('popstate', handleUrlChange);
     };
@@ -37,7 +37,7 @@ function App() {
     event.preventDefault();
     const selected = shipments.find(shipment => shipment.id === shipmentId);
     setSelectedShipment(selected || { id: '', name: '', email: '', boxes: '' });
-  
+
     window.history.pushState(null, '', `/shipment/${shipmentId}`);
   };
 
@@ -63,7 +63,12 @@ function App() {
             <ul>
               {shipments.map((shipment) => (
                 <li className='shipmentList' key={shipment.id}>
-                  <a className='shipmentLink' role="button" onClick={(event) => handleShipmentClick(event, shipment.id)} >
+                  <a
+                    href={`#${shipment.id}`}
+                    className='shipmentLink'
+                    role="button"
+                    onClick={(event) => handleShipmentClick(event, shipment.id)}
+                  >
                     {shipment.name}
                   </a>
                 </li>

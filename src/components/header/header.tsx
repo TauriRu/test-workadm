@@ -52,7 +52,7 @@ const Header: React.FC<HeaderProps> = ({ shipments, onShipmentClick }) => {
                     <div className='col-3'>
                         <img className='headerLogo' src={HeaderLogo} alt="headerLogo" />
                     </div>
-                    <div className="col-6" ref={searchContainerRef}>
+                    <div className="col-9" ref={searchContainerRef}>
 
                         <div className='searchContainer'>
                             <input

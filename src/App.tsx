@@ -12,6 +12,7 @@ export interface Shipment {
 function App() {
   const [shipments, setShipments] = useState<Shipment[]>([]);
   const [selectedShipment, setSelectedShipment] = useState<Shipment | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     fetch('/shipments.json')
@@ -52,13 +53,42 @@ function App() {
     ? Math.ceil(selectedShipment.boxes.split(',').map(box => parseFloat(box.trim())).reduce((total, boxQty) => total + boxQty, 0) / 10)
     : 0;
 
+  function toggleMobileMenu() {
+    setMobileMenuOpen(!mobileMenuOpen);
+  }
 
   return (
     <div className="App">
+   
       <Header shipments={shipments} onShipmentClick={handleShipmentClick} />
+         <div className="mobile-header">
+        <button className="hamburger-icon" onClick={toggleMobileMenu}>
+          <div className="bar"></div>
+          <div className="bar"></div>
+          <div className="bar"></div>
+        </button>
+      </div>
+      {mobileMenuOpen && (
+        <div className="mobile-menu">
+          <ul>
+            {shipments.map((shipment) => (
+              <li className='shipmentList' key={shipment.id}>
+                <a
+                  href={`#${shipment.id}`}
+                 
+                  role="button"
+                  onClick={(event) => handleShipmentClick(event, shipment.id)}
+                >
+                  {shipment.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <div className="container">
-        <div className="row">
-          <div className="col-3">
+        <div className="">
+        <div className={`col-3 ${mobileMenuOpen ? '' : 'hide-company-names'}`}>
             <h1 className='selectingShippingTitle'>Shipments list</h1>
             <ul>
               {shipments.map((shipment) => (
@@ -75,7 +105,7 @@ function App() {
               ))}
             </ul>
           </div>
-          <div className="col-6">
+          <div className={`col-9 ${mobileMenuOpen ? '' : 'col-12'}`}>
             {selectedShipment ? (
               <div className="shipment-card">
                 <h1 className="shipment-name">{selectedShipment.name}</h1>

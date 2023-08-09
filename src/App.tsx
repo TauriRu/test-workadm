@@ -59,10 +59,10 @@ function App() {
 
   return (
     <div className="App">
-   
+
       <Header shipments={shipments} onShipmentClick={handleShipmentClick} />
-         <div className="mobile-header">
-        <button className="hamburger-icon" onClick={toggleMobileMenu}>
+      <div className="mobile-header">
+        <button className={`hamburger-icon ${mobileMenuOpen ? 'hamburger-open' : ''}`} onClick={toggleMobileMenu}>
           <div className="bar"></div>
           <div className="bar"></div>
           <div className="bar"></div>
@@ -75,7 +75,7 @@ function App() {
               <li className='shipmentList' key={shipment.id}>
                 <a
                   href={`#${shipment.id}`}
-                 
+
                   role="button"
                   onClick={(event) => handleShipmentClick(event, shipment.id)}
                 >
@@ -87,8 +87,8 @@ function App() {
         </div>
       )}
       <div className="container">
-        <div className="">
-        <div className={`col-3 ${mobileMenuOpen ? '' : 'hide-company-names'}`}>
+        <div className="row">
+          <div className={`col-3 ${mobileMenuOpen ? '' : 'hide-company-names'}`}>
             <h1 className='selectingShippingTitle'>Shipments list</h1>
             <ul>
               {shipments.map((shipment) => (
@@ -105,7 +105,7 @@ function App() {
               ))}
             </ul>
           </div>
-          <div className={`col-9 ${mobileMenuOpen ? '' : 'col-12'}`}>
+          <div className={`col-9 ${mobileMenuOpen ? '' : 'maxWidth'}`}>
             {selectedShipment ? (
               <div className="shipment-card">
                 <h1 className="shipment-name">{selectedShipment.name}</h1>
@@ -117,7 +117,6 @@ function App() {
                   onChange={handleInputChange}
                 /></p>
                 <p className='selected'>Number of Cargo Bays:
-
                 </p>
                 <h3>{totalBays}</h3>
               </div>

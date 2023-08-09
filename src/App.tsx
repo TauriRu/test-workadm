@@ -46,8 +46,8 @@ function App() {
             <h1 className='selectingShippingTitle'>Shipments list</h1>
             <ul>
               {shipments.map((shipment) => (
-                <li className='shippmentList' key={shipment.id}>
-                  <a className='shippmentLink' role="button" onClick={(event) => handleShipmentClick(event, shipment.id)} >
+                <li className='shipmentList' key={shipment.id}>
+                  <a className='shipmentLink' role="button" onClick={(event) => handleShipmentClick(event, shipment.id)} >
                     {shipment.name}
                   </a>
                 </li>

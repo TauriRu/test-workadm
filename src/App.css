@@ -42,17 +42,17 @@ h1,h2,h3 {
   width: 320px;
   border-radius: 8px;
 }
-.shippmentList {
+.shipmentList {
   list-style: none;
   padding: 0;
   margin-bottom: 16px;
 }
-.shippmentList:hover {
+.shipmentList:hover {
   border-radius: 10px;
   background: linear-gradient(90deg, rgba(45, 48, 56, 0.00) 22.92%, #2D3038 100%);
 }
 
-.shippmentLink {
+.shipmentLink {
   color: #ffffff;
   text-decoration: none;
 }

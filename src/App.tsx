@@ -19,10 +19,26 @@ function App() {
       .then(data => setShipments(data));
   }, []);
 
+  useEffect(() => {
+    const handleUrlChange = () => {
+      const pathParts = window.location.pathname.split('/');
+      const shipmentId = pathParts[pathParts.length - 1];
+      const selected = shipments.find(shipment => shipment.id === shipmentId);
+      setSelectedShipment(selected || null);
+    };
+
+    window.addEventListener('popstate', handleUrlChange);
+    handleUrlChange(); 
+    return () => {
+      window.removeEventListener('popstate', handleUrlChange);
+    };
+  }, [shipments]);
   const handleShipmentClick = (event: React.MouseEvent<HTMLAnchorElement>, shipmentId: string) => {
     event.preventDefault();
     const selected = shipments.find(shipment => shipment.id === shipmentId);
     setSelectedShipment(selected || { id: '', name: '', email: '', boxes: '' });
+  
+    window.history.pushState(null, '', `/shipment/${shipmentId}`);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +82,7 @@ function App() {
                   onChange={handleInputChange}
                 /></p>
                 <p className='selected'>Number of Cargo Bays:
-                
+
                 </p>
                 <h3>{totalBays}</h3>
               </div>

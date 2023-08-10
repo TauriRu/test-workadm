@@ -13,6 +13,7 @@ const Header: React.FC<HeaderProps> = ({ shipments, onShipmentClick }) => {
     const [searchInput, setSearchInput] = useState('');
     const [filteredShippingNames, setFilteredShippingNames] = useState<string[]>([]);
     const searchContainerRef = useRef<HTMLDivElement>(null);
+    const [showMobileHeader, setShowMobileHeader] = useState(false);
 
     const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = event.target.value;
@@ -45,8 +46,13 @@ const Header: React.FC<HeaderProps> = ({ shipments, onShipmentClick }) => {
         };
     }, []);
 
+    const toggleMobileHeader = () => {
+        setShowMobileHeader(!showMobileHeader);
+    };
+    
     return (
         <header className='header'>
+            
             <div className="container">
                 <div className="row">
                     <div className='col-sm-4'>
@@ -86,6 +92,19 @@ const Header: React.FC<HeaderProps> = ({ shipments, onShipmentClick }) => {
                     </div>
                 </div>
             </div>
+            {showMobileHeader && (
+            <div className="mobile-header">
+                <button
+                    aria-label="Mobile Menu"
+                    className={`hamburger-icon ${showMobileHeader ? 'hamburger-open' : ''}`}
+                    onClick={toggleMobileHeader}
+                >
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                </button>
+            </div>
+        )}
         </header>
     );
 };

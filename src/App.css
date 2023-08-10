@@ -70,9 +70,6 @@ ul {
   .hide-company-names {
     display: none;
   }
-  .maxWidth {
-    width: 100% !important;
-  }
   .mobile-header {
     display: flex;
     justify-content: space-between;

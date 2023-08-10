@@ -17,12 +17,14 @@ function App() {
   const [selectedShipment, setSelectedShipment] = useState<Shipment | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+  // information fetch
   useEffect(() => {
     fetch('/shipments.json')
       .then(res => res.json())
       .then(data => setShipments(data));
   }, []);
 
+  // Url change use Effect
   useEffect(() => {
     const handleUrlChange = () => {
       const pathParts = window.location.pathname.split('/');
@@ -37,6 +39,7 @@ function App() {
       window.removeEventListener('popstate', handleUrlChange);
     };
   }, [shipments]);
+
   const handleShipmentClick = (event: React.MouseEvent<HTMLAnchorElement>, shipmentId: string) => {
     event.preventDefault();
     const selected = shipments.find(shipment => shipment.id === shipmentId);
@@ -52,6 +55,7 @@ function App() {
     }
   };
 
+  // Total bays calculation
   const totalBays = selectedShipment && selectedShipment.boxes
     ? Math.ceil(selectedShipment.boxes.split(',').map(box => parseFloat(box.trim())).reduce((total, boxQty) => total + boxQty, 0) / 10)
     : 0;
@@ -70,10 +74,10 @@ function App() {
           <div className="bar"></div>
         </button>
       </div>
-      {mobileMenuOpen && <MobileMenu shipments={shipments} onShipmentClick={handleShipmentClick}/>}
+      {mobileMenuOpen && <MobileMenu shipments={shipments} onShipmentClick={handleShipmentClick} />}
       <div className="container">
         <div className="row">
-          <ShipmentList shipments={shipments} onShipmentClick={handleShipmentClick} mobileMenuOpen={mobileMenuOpen}/>
+          <ShipmentList shipments={shipments} onShipmentClick={handleShipmentClick} mobileMenuOpen={mobileMenuOpen} />
           <ShipmentDetails selectedShipment={selectedShipment} handleInputChange={handleInputChange} totalBays={totalBays} />
         </div>
       </div>

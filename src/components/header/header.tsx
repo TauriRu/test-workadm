@@ -49,10 +49,10 @@ const Header: React.FC<HeaderProps> = ({ shipments, onShipmentClick }) => {
         <header className='header'>
             <div className="container">
                 <div className="row">
-                    <div className='col-3'>
+                    <div className='col-sm-4'>
                         <img className='headerLogo' src={HeaderLogo} alt="headerLogo" />
                     </div>
-                    <div className="col-9" ref={searchContainerRef}>
+                    <div className="col-sm-8" ref={searchContainerRef}>
 
                         <div className='searchContainer'>
                             <input

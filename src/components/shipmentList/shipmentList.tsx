@@ -9,7 +9,7 @@ interface ShipmentListProps {
 
 const ShipmentList: React.FC<ShipmentListProps> = ({ shipments, onShipmentClick,mobileMenuOpen }) => {
   return (
-    <div className={`col-3 ${mobileMenuOpen ? '' : 'hide-company-names'}`}>
+    <div className={`col-sm-4 ${mobileMenuOpen ? '' : 'hide-company-names'}`}>
       <h1 className='selectingShippingTitle'>Shipments list</h1>
       <ul>
         {shipments.map((shipment) => (

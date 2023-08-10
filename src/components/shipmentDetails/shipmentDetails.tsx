@@ -9,7 +9,7 @@ interface ShipmentCardProps {
 
 const ShipmentDetails: React.FC<ShipmentCardProps> = ({ selectedShipment, handleInputChange, totalBays }) => {
   return (
-    <div className='col-md-auto'>
+    <div className='col-sm-8'>
       <div className="shipment-card">
         <h1 className="shipment-name">{selectedShipment?.name}</h1>
         <p className="shipment-email selected">Email: {selectedShipment?.email}</p>

@@ -1,1 +1,1 @@
-Creating a container box functionality for "spaceX" 
+This project demonstrates how to create a container box functionality for displaying SpaceX information using React and TypeScript. 

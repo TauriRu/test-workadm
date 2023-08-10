@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ shipments, onShipmentClick }) => {
     const [searchInput, setSearchInput] = useState('');
     const [filteredShippingNames, setFilteredShippingNames] = useState<string[]>([]);
     const searchContainerRef = useRef<HTMLDivElement>(null);
-    const [showMobileHeader, setShowMobileHeader] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = event.target.value;
@@ -46,20 +46,19 @@ const Header: React.FC<HeaderProps> = ({ shipments, onShipmentClick }) => {
         };
     }, []);
 
-    const toggleMobileHeader = () => {
-        setShowMobileHeader(!showMobileHeader);
+    const toggleMobileMenu = () => {
+        setMobileMenuOpen(!mobileMenuOpen);
     };
+
     
     return (
         <header className='header'>
-            
             <div className="container">
                 <div className="row">
                     <div className='col-sm-4'>
                         <img className='headerLogo' src={HeaderLogo} alt="headerLogo" />
                     </div>
                     <div className="col-sm-8" ref={searchContainerRef}>
-
                         <div className='searchContainer'>
                             <input
                                 className='searchInput'
@@ -92,19 +91,34 @@ const Header: React.FC<HeaderProps> = ({ shipments, onShipmentClick }) => {
                     </div>
                 </div>
             </div>
-            {showMobileHeader && (
+           
             <div className="mobile-header">
-                <button
-                    aria-label="Mobile Menu"
-                    className={`hamburger-icon ${showMobileHeader ? 'hamburger-open' : ''}`}
-                    onClick={toggleMobileHeader}
-                >
+                <button aria-label="Mobile Menu" className={`hamburger-icon ${mobileMenuOpen ? 'hamburger-open' : ''}`} onClick={toggleMobileMenu}>
                     <div className="bar"></div>
                     <div className="bar"></div>
                     <div className="bar"></div>
-                </button>
+                </button> 
+                {mobileMenuOpen ? (
+                <div className={`mobile-menu ${mobileMenuOpen ? 'mobile-menu-open' : ''}`}>
+                    <ul>
+                        {shipments.map((shipment) => (
+                            <li className='shipmentList' key={shipment.id}>
+                                <a
+                                    href="/"
+                                    role="button"
+                                    onClick={(event) => {
+                                        event.preventDefault();
+                                        onShipmentClick(event, shipment.id);
+                                    }}
+                                >
+                                    {shipment.name}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                ) : ( '' )}
             </div>
-        )}
         </header>
     );
 };

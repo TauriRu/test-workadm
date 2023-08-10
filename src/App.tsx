@@ -1,6 +1,9 @@
 import './App.css';
 import Header from './components/header/header';
 import { useState, useEffect } from 'react';
+import MobileMenu from './components/mobileMenu/mobileMenu';
+import ShipmentList from './components/shipmentList/shipmentList';
+import ShipmentDetails from './components/shipmentDetails/shipmentDetails';
 
 export interface Shipment {
   id: string;
@@ -59,71 +62,19 @@ function App() {
 
   return (
     <div className="App">
-
       <Header shipments={shipments} onShipmentClick={handleShipmentClick} />
       <div className="mobile-header">
-        <button className={`hamburger-icon ${mobileMenuOpen ? 'hamburger-open' : ''}`} onClick={toggleMobileMenu}>
+        <button aria-label="Mobile Menu" className={`hamburger-icon ${mobileMenuOpen ? 'hamburger-open' : ''}`} onClick={toggleMobileMenu}>
           <div className="bar"></div>
           <div className="bar"></div>
           <div className="bar"></div>
         </button>
       </div>
-      {mobileMenuOpen && (
-        <div className="mobile-menu">
-          <ul>
-            {shipments.map((shipment) => (
-              <li className='shipmentList' key={shipment.id}>
-                <a
-                  href={`#${shipment.id}`}
-
-                  role="button"
-                  onClick={(event) => handleShipmentClick(event, shipment.id)}
-                >
-                  {shipment.name}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {mobileMenuOpen && <MobileMenu shipments={shipments} onShipmentClick={handleShipmentClick}/>}
       <div className="container">
         <div className="row">
-          <div className={`col-3 ${mobileMenuOpen ? '' : 'hide-company-names'}`}>
-            <h1 className='selectingShippingTitle'>Shipments list</h1>
-            <ul>
-              {shipments.map((shipment) => (
-                <li className='shipmentList' key={shipment.id}>
-                  <a
-                    href={`#${shipment.id}`}
-                    className='shipmentLink'
-                    role="button"
-                    onClick={(event) => handleShipmentClick(event, shipment.id)}
-                  >
-                    {shipment.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className={`col-9 ${mobileMenuOpen ? '' : 'maxWidth'}`}>
-            {selectedShipment ? (
-              <div className="shipment-card">
-                <h1 className="shipment-name">{selectedShipment.name}</h1>
-                <p className="shipment-email selected">Email: {selectedShipment.email}</p>
-                <p className='selected'>CARGO BOXES</p>
-                <p className="shipment-boxes">Boxes: <input
-                  type='text'
-                  value={selectedShipment.boxes || ''}
-                  onChange={handleInputChange}
-                /></p>
-                <p className='selected'>Number of Cargo Bays:
-                </p>
-                <h3>{totalBays}</h3>
-              </div>
-            ) : (
-              <h1>No shipment selected</h1>
-            )}
-          </div>
+          <ShipmentList shipments={shipments} onShipmentClick={handleShipmentClick} mobileMenuOpen={mobileMenuOpen}/>
+          <ShipmentDetails selectedShipment={selectedShipment} handleInputChange={handleInputChange} totalBays={totalBays} />
         </div>
       </div>
     </div>
